@@ -1,39 +1,46 @@
 package dpoo.taller1.modelo;
+import java.util.*;
 
 public class Combo implements Producto
 {
 	// Atributos
 	private double descuento;
 	private String nombreCombo;
-	private String[] itemsCombo; //puede ser public 
+	private List<ProductoMenu> itemsCombo; //puede ser public 
 
 	// Constructor
 	public Combo(String nombre, double descuento) 
 	{
 		this.descuento=descuento;
 		nombreCombo=nombre;
+		itemsCombo=new ArrayList<>(); //10 max lenght
 	}
 	
 	// Métodos Class
-	public void agregarItemACombo(Producto itemCombo) 
+	public void agregarItemACombo(ProductoMenu itemCombo) 
 	{
-		//itemsCombo .add ->  Producto.getNombre()  -
+		itemsCombo.add(itemCombo); //parametro(array de items) . add (obj ProductoMenu)
 	}
 	
 	// Métodos Herencia
 	public int getPrecio() 
 	{
-		return 0;
+		int valorTotal=0;
+		for(ProductoMenu cadaItem:itemsCombo) 
+		{
+			valorTotal+=cadaItem.getPrecio(); //get precio de cada productoMenu (item del combo)
+		}
+		return (int)(valorTotal*this.descuento); //return es int
 	}
 
 	public String getNombre() 
 	{
-		return null;
+		return nombreCombo;
 	}
 
 	public String generarTextoFactura() 
 	{
-		return null;
+		return "El precio del combo "+nombreCombo+" es: "+getPrecio()+"\n";
 	}
 	
 }

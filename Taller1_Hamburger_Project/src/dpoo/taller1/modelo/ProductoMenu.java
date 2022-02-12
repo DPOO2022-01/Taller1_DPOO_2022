@@ -18,17 +18,17 @@ public class ProductoMenu implements Producto
 	// Métodos herencia
 	public int getPrecio() 
 	{
-		return 0;
+		return precioBase;
 	}
 
 	public String getNombre() 
 	{
-		return null;
+		return nombre;
 	}
 	
 	public String generarTextoFactura() 
 	{
-		return null;
+		return "Producto de Menu "+nombre+" cuesta: "+getPrecio()+"\n";
 	}
 	
 }

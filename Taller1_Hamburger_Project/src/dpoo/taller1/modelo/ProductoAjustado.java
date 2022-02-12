@@ -1,17 +1,19 @@
 package dpoo.taller1.modelo;
+import java.util.*;
 
 public class ProductoAjustado implements Producto 
 {
 	// Atributos
-	private int[] agregados;
-	private int[] eliminados;
-	final private int base;
+	private List<Ingrediente> agregados;
+	private List<Ingrediente> eliminados;
+	final private ProductoMenu base;
 	
 	// Constructor
 	public ProductoAjustado(ProductoMenu base) 
 	{
-		this.base=1;
-		//por definir...
+		this.base=base;
+		agregados = new ArrayList<>(); //max 10 lenght
+		eliminados = new ArrayList<>(); //max 10 lenght
 	}
 	
 	// Métodos class  0 
@@ -19,17 +21,22 @@ public class ProductoAjustado implements Producto
 	// Métodos herencia  
 	public int getPrecio() 
 	{
-		return 0;
+		int valorTotal=0;
+		for(Ingrediente cadaIngrediente:agregados) 
+		{
+			valorTotal+=cadaIngrediente.geCostoAdicional();
+		}
+		return valorTotal;
 	}
 
 	public String getNombre() 
 	{
-		return null;
+		return base.getNombre(); //return nombre de la base ---------- revisar
 	}
 
 	public String generarTextoFactura() 
 	{
-		return null;
+		return "El valor de "+base.getNombre()+" adicional a los productos agregados es: "+getPrecio()+"\n";
 	}
 
 }
