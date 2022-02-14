@@ -1,42 +1,51 @@
 package dpoo.taller1.consola;
+import dpoo.taller1.modelo.*;
 
+import java.util.Scanner;
 
 public class Aplicacion
 {
 	public static void main(String[] argumentos) 
 	{
+		mostrarMenu();
+	}
+
+	public static void mostrarMenu() 
+	{
 		Boolean salir = false;
-		while (!salir)
+		while(!salir)
 		{
-			System.out.println("Bienvenido.\nSeleccione una opcion: ");
+			int opcion;
+			System.out.println("Bienvenido. \n");
 			System.out.println("1. Ver el menu de productos disponibles.");
 			System.out.println("2. Realizar una orden.");
 			System.out.println("3. Verificar el estado de una orden.");
 			System.out.println("0. Salir de la aplicacion.");
-			//pedir opcion y mandarla como parametro a ejecutarOpcion()
+			Scanner entrada = new Scanner(System.in);
+			System.out.println("\nSeleccione una opcion: ");
+			opcion = entrada.nextInt();
+			ejecutarOpcion(opcion);
 		}
-		
 	}
-	
-	public void ejecutarOpcion(int opcion)
+	public static void ejecutarOpcion(int opcion)
 	{
 		Boolean seguir = true;
 		while(seguir)
 		{
-			if(opcion==1)
+			if (opcion==1)
 			{
 				seguir = false;
-				mostrarMenu();
+				Restaurante menu =new Restaurante();
+				menu.getMenuBase();
 			}
 			else if (opcion==2)
 			{
 				seguir = false;
-				//abrir opcion tomar orden
+				//abrir opcion verificar orden
 			}
 			else if (opcion==3)
 			{
-				seguir = false;
-				//abrir opcion verificar orden
+				//Salir aplicacion
 			}
 			else if (opcion==0)
 			{
@@ -47,17 +56,5 @@ public class Aplicacion
 				System.out.println("Opcion invalida.");
 			}
 		}
-	}
-
-	public void mostrarMenu() 
-	{
-		System.out.println("1. Producto 1.");
-		System.out.println("2. Producto 2.");
-		System.out.println("3. Producto 3.");
-		System.out.println("4. Producto 4.");
-		System.out.println("5. Combo 1.");
-		System.out.println("6. Combo 2.");
-		System.out.println("7. Combo 3.");
-		System.out.println("8. Combo 4.");
 	}
 }
