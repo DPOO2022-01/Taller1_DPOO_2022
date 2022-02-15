@@ -4,13 +4,38 @@ import java.util.*;
 
 public class Restaurante 
 {
-	//public List<productos> menu;
-	public String producto;
-	private List<Producto> menu;
+	private static int pedidoEnCurso;
+	private List<Pedido> pedidos;
+	private List<ProductoMenu> menuBase;
+	private List<Ingrediente> ingredientes;
+	
+	public Restaurante()
+	{
+		pedidoEnCurso=0;
+		pedidos =new ArrayList<>();
+		menuBase = new ArrayList<>();
+		ingredientes = new ArrayList<>();
+	}
 	
 	public static void iniciarPedido(String nombreCliente, String direccionCliente)
 	{
-		System.out.println(nombreCliente+" - "+direccionCliente);
+		//System.out.println(nombreCliente+" - "+direccionCliente);
+		try
+		{
+			System.out.print("Inserte su nombre y unido por una ´,´ adjunte su dirección actual");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String linea= reader.readLine();
+			String[] direccion= linea.split(",");
+			pedidoEnCurso=1; //static para acceder desde clase y no desde obj
+			Pedido pedido= new Pedido(direccion[0],direccion[1]);
+			
+			System.out.println("Su pedido esta en curso, identifiquelo con el numero: "+pedido.getIdPedido());
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
 	}
 	
 	public static void cerrarYGuardarPedido()
@@ -23,29 +48,81 @@ public class Restaurante
 		//items = newArrayList<>();
 		//return ;
 	//}
-	public List<Producto> getMenuBase()
+	public Pedido getPedidoEnCurso() 
 	{
-		menu=new ArrayList<>();
-		return menu;
-	}
-
-	public void cargarInformacionRestaurante(File ingre, File menu, File combos)
-	{
-		try 
+		if (pedidoEnCurso!=0) 
 		{
-			FileReader archivo = new FileReader("Ingredientes.txt");
-			BufferedReader buff = new BufferedReader(archivo);
-			String linea = buff.readLine();
-			while(linea != null) 
-			{
-				linea = buff.readLine();
-			}
-			buff.close();
-		} 
-		catch (FileNotFoundException e) 
+			return null; //obj pedido
+		}
+		else 
 		{
-			e.printStackTrace();
+			return null;
 		}
 		
 	}
+	
+	public List<Producto> getMenuBase()
+	{
+		return null;
+	}
+	public List<Ingrediente> getIngredientes()
+	{
+		return null;
+	}
+
+	public void cargarInformacionRestaurante(File archivoIngrendinetes, File archivoMenu, File archivoCombos)
+	{
+		cargarIngredinetes(archivoIngrendinetes);
+		cargarMenu(archivoMenu);
+		cargarCombos(archivoCombos);
+	}
+	private void cargarIngredinetes(File archivoIngrendinetes) 
+	{
+		try
+		{
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String linea= reader.readLine();
+			while (linea!= null) 
+			{
+				String[] listaIngredientes= linea.split(";");
+				int value=Integer.parseInt(listaIngredientes[1]);
+				Ingrediente ingrediente= new Ingrediente(listaIngredientes[0],value);
+				this.ingredientes.add(ingrediente);
+				linea= reader.readLine(); //siguiente linea
+			}
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
+	}
+	private void cargarMenu(File archivoMenu) 
+	{
+		try
+		{
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String linea= reader.readLine();
+			while (linea!= null) 
+			{
+				String[] listaMenu= linea.split(";");
+				int value=Integer.parseInt(listaMenu[1]);
+				ProductoMenu Menu= new ProductoMenu(listaMenu[0],value);
+				this.menuBase.add(Menu);
+				linea= reader.readLine(); //siguiente linea
+			}
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
+	}
+	private void cargarCombos(File archivoCombos) 
+	{
+		
+	}
+	
 }
