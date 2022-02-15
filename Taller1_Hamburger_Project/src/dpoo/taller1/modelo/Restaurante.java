@@ -5,7 +5,7 @@ import java.util.*;
 public class Restaurante 
 {
 	private static int pedidoEnCurso;
-	private List<Pedido> pedidos;
+	private static List<Pedido> pedidos;
 	private List<ProductoMenu> menuBase;
 	private List<Ingrediente> ingredientes;
 	private List<Combo> combos;
@@ -31,7 +31,7 @@ public class Restaurante
 			Pedido pedido= new Pedido(direccion[0],direccion[1]);
 			
 			System.out.println("Su pedido esta en curso, identifiquelo con el numero: "+pedido.getIdPedido());
-			
+			cerrarYGuardarPedido(pedido);
 		}
 		catch (IOException e)
 		{
@@ -40,17 +40,13 @@ public class Restaurante
 		}
 	}
 	
-	public static void cerrarYGuardarPedido()
+	public static void cerrarYGuardarPedido(Pedido pedido) //se añadió parámetro
 	{
-		//pedidos.add(pedido);----- se necesita parametro del obj pedido
+		pedidos.add(pedido);//----- se necesita atributo static
+		pedidoEnCurso=0;
 	}
-	//private List<String> getPedidoEnCurso ()
-	//{
-		//String producto;
-		//items = newArrayList<>();
-		//return ;
-	//}
-	public Pedido getPedidoEnCurso() 
+	
+	public Pedido getPedidoEnCurso()  
 	{
 		if (pedidoEnCurso!=0) 
 		{
@@ -63,13 +59,13 @@ public class Restaurante
 		
 	}
 	
-	public List<Producto> getMenuBase()
+	public List<ProductoMenu> getMenuBase()
 	{
-		return null;
+		return menuBase;
 	}
 	public List<Ingrediente> getIngredientes()
 	{
-		return null;
+		return ingredientes;
 	}
 
 	public void cargarInformacionRestaurante(File archivoIngrendinetes, File archivoMenu, File archivoCombos)
