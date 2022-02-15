@@ -1,10 +1,8 @@
 package dpoo.taller1.consola;
 import dpoo.taller1.modelo.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class Aplicacion
 {
@@ -32,7 +30,7 @@ public class Aplicacion
 			}
 			catch (IOException e)
 			{
-				System.out.println("Error reading from the standard input");
+				System.out.println("Error leyendo la consola");
 				e.printStackTrace();
 			}
 			
@@ -43,24 +41,40 @@ public class Aplicacion
 		Boolean seguir = true;
 		while(seguir)
 		{
-			if (opcion==1)
+			if (opcion.equals("1"))
 			{
 				seguir = false;
 				Restaurante menu =new Restaurante();
 				menu.getMenuBase();
 			}
-			else if (opcion==2)
+			else if (opcion.equals("2"))
+			{
+				String nombre = "";
+				String direccion = "";
+				seguir = false;
+				try
+				{
+					System.out.println("\nEscriba su nombre: ");
+					BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+					nombre = reader.readLine();
+					System.out.println("\nEscriba su direccion: ");
+					BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
+					direccion = reader1.readLine();
+				}
+				catch (IOException e)
+				{
+					System.out.println("Error leyendo la consola");
+					e.printStackTrace();
+				}
+				Restaurante.iniciarPedido(nombre ,direccion);
+			}
+			else if (opcion.equals("3"))
+			{
+				//Salir aplicacion
+			}
+			else if (opcion.equals("0"))
 			{
 				seguir = false;
-				//abrir opcion verificar orden
-			}
-			else if (opcion==3)
-			{
-				//Salir aplicacion
-			}
-			else if (opcion==0)
-			{
-				//Salir aplicacion
 			}
 			else
 			{

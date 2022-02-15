@@ -10,7 +10,7 @@ public class Restaurante
 	
 	public static void iniciarPedido(String nombreCliente, String direccionCliente)
 	{
-		
+		System.out.println(nombreCliente+" - "+direccionCliente);
 	}
 	
 	public static void cerrarYGuardarPedido()
