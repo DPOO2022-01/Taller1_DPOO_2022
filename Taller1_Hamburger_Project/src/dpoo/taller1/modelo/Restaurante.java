@@ -1,4 +1,5 @@
 package dpoo.taller1.modelo;
+import java.io.*;
 import java.util.*;
 
 public class Restaurante 
@@ -16,16 +17,35 @@ public class Restaurante
 	{
 		
 	}
-	private List<String> getPedidoEnCurso ()
-	{
+	//private List<String> getPedidoEnCurso ()
+	//{
 		//String producto;
 		//items = newArrayList<>();
 		//return ;
-	}
+	//}
 	public List<Producto> getMenuBase()
 	{
 		menu=new ArrayList<>();
 		return menu;
 	}
 
+	public void cargarInformacionRestaurante(File ingre, File menu, File combos)
+	{
+		try 
+		{
+			FileReader archivo = new FileReader("Ingredientes.txt");
+			BufferedReader buff = new BufferedReader(archivo);
+			String linea = buff.readLine();
+			while(linea != null) 
+			{
+				linea = buff.readLine();
+			}
+			buff.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+		
+	}
 }

@@ -1,6 +1,9 @@
 package dpoo.taller1.consola;
 import dpoo.taller1.modelo.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Aplicacion
@@ -15,19 +18,27 @@ public class Aplicacion
 		Boolean salir = false;
 		while(!salir)
 		{
-			int opcion;
 			System.out.println("Bienvenido. \n");
 			System.out.println("1. Ver el menu de productos disponibles.");
 			System.out.println("2. Realizar una orden.");
 			System.out.println("3. Verificar el estado de una orden.");
 			System.out.println("0. Salir de la aplicacion.");
-			Scanner entrada = new Scanner(System.in);
-			System.out.println("\nSeleccione una opcion: ");
-			opcion = entrada.nextInt();
-			ejecutarOpcion(opcion);
+			try
+			{
+				System.out.println("\nSeleccione una opcion: ");
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				String opcion = reader.readLine();
+				ejecutarOpcion(opcion);
+			}
+			catch (IOException e)
+			{
+				System.out.println("Error reading from the standard input");
+				e.printStackTrace();
+			}
+			
 		}
 	}
-	public static void ejecutarOpcion(int opcion)
+	public static void ejecutarOpcion(String opcion)
 	{
 		Boolean seguir = true;
 		while(seguir)
