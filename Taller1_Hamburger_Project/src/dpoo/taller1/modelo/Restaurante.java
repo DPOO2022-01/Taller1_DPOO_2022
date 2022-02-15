@@ -8,6 +8,7 @@ public class Restaurante
 	private List<Pedido> pedidos;
 	private List<ProductoMenu> menuBase;
 	private List<Ingrediente> ingredientes;
+	private List<Combo> combos;
 	
 	public Restaurante()
 	{
@@ -30,6 +31,7 @@ public class Restaurante
 			Pedido pedido= new Pedido(direccion[0],direccion[1]);
 			
 			System.out.println("Su pedido esta en curso, identifiquelo con el numero: "+pedido.getIdPedido());
+			
 		}
 		catch (IOException e)
 		{
@@ -40,7 +42,7 @@ public class Restaurante
 	
 	public static void cerrarYGuardarPedido()
 	{
-		
+		//pedidos.add(pedido);----- se necesita parametro del obj pedido
 	}
 	//private List<String> getPedidoEnCurso ()
 	//{
@@ -122,7 +124,35 @@ public class Restaurante
 	}
 	private void cargarCombos(File archivoCombos) 
 	{
-		
+		try
+		{
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			String linea= reader.readLine();
+			while (linea!= null) 
+			{
+				String[] listaCombo= linea.split(";");
+				double value=Double.parseDouble(listaCombo[1]); // Porcentaje, revisar ------------------
+				Combo combo= new Combo(listaCombo[0],value);
+				for(int i=2;i<listaCombo.length;i++) 
+				{
+					for(ProductoMenu cadaProductoMenu: menuBase) 
+					{
+						if(cadaProductoMenu.getNombre().equals(listaCombo[i])) 
+						{
+							combo.agregarItemACombo(cadaProductoMenu);
+						}
+					}
+				}
+				this.combos.add(combo);
+				linea= reader.readLine(); //siguiente linea
+			}
+			
+		}
+		catch (IOException e)
+		{
+			System.out.println("Error leyendo de la consola");
+			e.printStackTrace();
+		}
 	}
 	
 }
