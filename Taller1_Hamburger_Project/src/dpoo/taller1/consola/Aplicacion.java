@@ -27,16 +27,13 @@ public class Aplicacion
 
 	public static void mostrarMenu() 
 	{
-		Boolean salir = false;
-		while(!salir)
-		{
-			System.out.println("Bienvenido. \n");
-			System.out.println("0. Cargar Informacion. ");
-			System.out.println("1. Ver el menu de productos disponibles.");
-			System.out.println("2. Realizar una orden.");
-			System.out.println("3. Verificar el estado de una orden.");
-			System.out.println("4. Salir de la aplicacion.");
-		}
+		System.out.println("Bienvenido. \n");
+		System.out.println("0. Cargar Informacion. ");
+		System.out.println("1. Ver el menu de productos disponibles.");
+		System.out.println("2. Realizar una orden.");
+		System.out.println("3. Verificar el estado de una orden.");
+		System.out.println("4. Salir de la aplicacion.");
+		
 	}
 	public static void ejecutarOpcion(String opcion)
 	{
