@@ -127,7 +127,7 @@ public class Aplicacion
 					{
 						if (i==value1-1) 
 						{
-							p.agregarNuevoProducto((Producto) cadaProductoMenu);
+							p.agregarProducto((Producto) cadaProductoMenu);
 							System.out.println("Producto "+cadaProductoMenu.getNombre()+" añadido");
 						}
 						i++;
@@ -137,7 +137,7 @@ public class Aplicacion
 					{
 						if (j==value2-1) 
 						{
-							p.agregarNuevoProducto((Producto) cadaIngrediente);
+							p.agregarProducto((Producto) cadaIngrediente);
 							System.out.println("Ingrediente "+cadaIngrediente.getNombre()+" añadido");
 						}
 						j++;
