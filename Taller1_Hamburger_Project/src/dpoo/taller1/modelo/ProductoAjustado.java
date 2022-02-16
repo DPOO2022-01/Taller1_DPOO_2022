@@ -24,7 +24,7 @@ public class ProductoAjustado implements Producto
 		int valorTotal=0;
 		for(Ingrediente cadaIngrediente:agregados) 
 		{
-			valorTotal+=cadaIngrediente.geCostoAdicional();
+			valorTotal+=cadaIngrediente.getCostoAdicional();
 		}
 		return valorTotal;
 	}

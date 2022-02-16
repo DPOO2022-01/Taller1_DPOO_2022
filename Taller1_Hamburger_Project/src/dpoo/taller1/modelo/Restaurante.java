@@ -30,9 +30,9 @@ public class Restaurante
 			String[] direccion= linea.split(",");
 			pedidoEnCurso=1; //static para acceder desde clase y no desde obj
 			Pedido pedido= new Pedido(direccion[0],direccion[1]);
-			
+			pedido.numeroPedidos+=1; //+1 debería ser por c/u objs creados
 			System.out.println("Su pedido esta en curso, identifiquelo con el numero: "+pedido.getIdPedido());
-			cerrarYGuardarPedido(pedido);
+			//cerrarYGuardarPedido(pedido);
 		}
 		catch (IOException e)
 		{
@@ -41,23 +41,26 @@ public class Restaurante
 		}
 	}
 	
-	public static void cerrarYGuardarPedido(Pedido pedido) //se añadió parámetro
+	public void cerrarYGuardarPedido(Pedido pedido) //se añadió parámetro
 	{
 		pedidos.add(pedido);//----- se necesita atributo static
 		pedidoEnCurso=0;
 	}
 	
-	public Pedido getPedidoEnCurso()  
+	public Pedido getPedidoEnCurso(int id)  //filtro por id, parámetro añadido
 	{
+		Pedido a = null;
 		if (pedidoEnCurso!=0) 
 		{
-			return null; //obj pedido
+			for(Pedido cadaPedido: pedidos) 
+			{
+				if (cadaPedido.getIdPedido()==id) 
+				{
+					a= cadaPedido;
+				}
+			}
 		}
-		else 
-		{
-			return null;
-		}
-		
+		return a;//obj pedido null si false
 	}
 	
 	public List<ProductoMenu> getMenuBase()

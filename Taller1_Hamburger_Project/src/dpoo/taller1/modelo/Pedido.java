@@ -5,7 +5,7 @@ import java.util.*;
 public class Pedido 
 {
 	private List<Producto> itemsPedido; //puede ser public
-	private int numeroPedidos;
+	public int numeroPedidos=0; //debe ser public para poder filtrar por id, id va relacionado con # de pedidos
 	private int idPedido;
 	private String nombreCliente;
 	private String direccionCliente;
@@ -14,8 +14,7 @@ public class Pedido
 	public Pedido(String nombreCliente, String direccionCliente) 
 	{
 		itemsPedido = new ArrayList<>();
-		numeroPedidos=0;
-		idPedido=0;
+		idPedido=numeroPedidos+1;
 		this.nombreCliente=nombreCliente;
 		this.direccionCliente=direccionCliente;
 	}

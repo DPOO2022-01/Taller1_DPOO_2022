@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class Aplicacion
 {
@@ -30,8 +31,8 @@ public class Aplicacion
 		System.out.println("Bienvenido. \n");
 		System.out.println("0. Cargar Informacion. ");
 		System.out.println("1. Ver el menu de productos disponibles.");
-		System.out.println("2. Realizar una orden.");
-		System.out.println("3. Verificar el estado de una orden.");
+		System.out.println("2. Realizar un pedido.");
+		System.out.println("3. Agregar elemento a pedido.");
 		System.out.println("4. Salir de la aplicacion.");
 		
 	}
@@ -41,7 +42,7 @@ public class Aplicacion
 		Boolean seguir = true;
 		while(seguir)
 		{
-			
+			int idPedido=1;
 			if(opcion.equals("0")) 
 			{
 				try
@@ -62,66 +63,117 @@ public class Aplicacion
 				}
 				catch (IOException e)
 				{
-					System.out.println("Error leyendo de la consola");
+					System.out.println("Error leyendo dirección de archivos o archivos");
 					e.printStackTrace();
 				}
 			}
 			
 			else if (opcion.equals("1"))
 			{
+				int i=1;
+				int j=1;
+				System.out.println("Menú del restaurante: ");
+				for (ProductoMenu cadaProductoMenu:aplicacion.getMenuBase()) 
+				{
+					System.out.println(i+". "+cadaProductoMenu.getNombre()+"......"+cadaProductoMenu.getPrecio());
+					i++;
+				}
+				System.out.println("Acompañamientos y/o porciones extra:");
+				for (Ingrediente cadaIngrediente:aplicacion.getIngredientes()) 
+				{
+					System.out.println(j+". "+cadaIngrediente.getNombre()+"......"+cadaIngrediente.getCostoAdicional());
+					j++;
+				}
 				
-				aplicacion.getMenuBase();
 			}
 			else if (opcion.equals("2"))
 			{
-				String nombre = "";
-				String direccion = "";
 				try
 				{
 					System.out.println("\nEscriba su nombre: ");
 					BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-					nombre = reader.readLine();
+					String nombre = reader.readLine();
 					System.out.println("\nEscriba su direccion: ");
 					BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
-					direccion = reader1.readLine();
+					String direccion = reader1.readLine();
+					Restaurante.iniciarPedido(nombre ,direccion);
+					idPedido++;
+					System.out.println("Pedido creado correctamente");
 				}
 				catch (IOException e)
 				{
-					System.out.println("Error leyendo la consola");
+					System.out.println("Error opcion1");
 					e.printStackTrace();
 				}
-				Restaurante.iniciarPedido(nombre ,direccion);
+				
 			}
 			else if (opcion.equals("3"))
 			{
-				//
+				try 
+				{
+					System.out.println("Digite el número del producto que desea: ");
+					BufferedReader readerp = new BufferedReader(new InputStreamReader(System.in));
+					String producto = readerp.readLine();
+					System.out.println("Digite el número del acompañamiento: ");
+					BufferedReader readera = new BufferedReader(new InputStreamReader(System.in));
+					String extra = readera.readLine();
+					int value1=Integer.parseInt(producto);
+					int value2=Integer.parseInt(extra);
+					List<ProductoMenu> listBase = aplicacion.getMenuBase();
+					List<Ingrediente> listIngredientes = aplicacion.getIngredientes();
+					Pedido p=aplicacion.getPedidoEnCurso(idPedido);
+					int i=0;
+					for(ProductoMenu cadaProductoMenu: listBase) 
+					{
+						if (i==value1-1) 
+						{
+							p.agregarNuevoProducto((Producto) cadaProductoMenu);
+							System.out.println("Producto "+cadaProductoMenu.getNombre()+" añadido");
+						}
+						i++;
+					}
+					int j=0;
+					for(Ingrediente cadaIngrediente: listIngredientes) 
+					{
+						if (j==value2-1) 
+						{
+							p.agregarNuevoProducto((Producto) cadaIngrediente);
+							System.out.println("Ingrediente "+cadaIngrediente.getNombre()+" añadido");
+						}
+						j++;
+					}
+					
+				}
+				catch (IOException e)
+				{
+					System.out.println("Error opcion2");
+					e.printStackTrace();
+				}
+				
 			}
 			else if (opcion.equals("4"))
 			{
+				Pedido p=aplicacion.getPedidoEnCurso(idPedido);
+				aplicacion.cerrarYGuardarPedido(p);
 				seguir = false;
 			}
 			else
 			{
 				System.out.println("Opcion invalida.");
 			}
-			// redefinir opcion después de la primer vez
 			try 
 			{
 				mostrarMenu();
-				System.out.println("\nSeleccione una opcion: ");
+				System.out.println("Seleccione una opcion: ");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				opcion=reader.readLine();
 			}
 			catch (IOException e)
 			{
-				System.out.println("Error leyendo la consola");
+				System.out.println("error mostrando consola");
 				e.printStackTrace();
 			}
-			
-			
-			
-			
-			
 		}
 	}
+	
 }
