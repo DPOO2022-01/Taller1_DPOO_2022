@@ -14,8 +14,9 @@ public class Restaurante
 	{
 		pedidoEnCurso=0;
 		pedidos =new ArrayList<>();
-		menuBase = new ArrayList<>();
-		ingredientes = new ArrayList<>();
+		combos = new ArrayList<>();
+		menuBase = new ArrayList<>(14);
+		ingredientes = new ArrayList<>(23);
 	}
 	
 	public static void iniciarPedido(String nombreCliente, String direccionCliente)
@@ -74,11 +75,11 @@ public class Restaurante
 		cargarMenu(archivoMenu);
 		cargarCombos(archivoCombos);
 	}
-	private void cargarIngredinetes(File archivoIngrendinetes) 
+	private void cargarIngredinetes(File archivoIngrendientes) 
 	{
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader reader = new BufferedReader(new FileReader(archivoIngrendientes));
 			String linea= reader.readLine();
 			while (linea!= null) 
 			{
@@ -100,7 +101,7 @@ public class Restaurante
 	{
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader reader = new BufferedReader(new FileReader(archivoMenu));
 			String linea= reader.readLine();
 			while (linea!= null) 
 			{
@@ -122,13 +123,18 @@ public class Restaurante
 	{
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader reader = new BufferedReader(new FileReader(archivoCombos));
 			String linea= reader.readLine();
 			while (linea!= null) 
 			{
 				String[] listaCombo= linea.split(";");
-				double value=Double.parseDouble(listaCombo[1]); // Porcentaje, revisar ------------------
+				listaCombo[1].replaceFirst("%", "");
+				double value=Double.parseDouble(listaCombo[1].replaceFirst("%", "")); 
+				value=value/100;
+				System.out.println("Post "+value);
 				Combo combo= new Combo(listaCombo[0],value);
+				this.combos.add(combo);
+				System.out.println(combo);
 				for(int i=2;i<listaCombo.length;i++) 
 				{
 					for(ProductoMenu cadaProductoMenu: menuBase) 
@@ -138,11 +144,9 @@ public class Restaurante
 							combo.agregarItemACombo(cadaProductoMenu);
 						}
 					}
-				}
-				this.combos.add(combo);
+				}	
 				linea= reader.readLine(); //siguiente linea
 			}
-			
 		}
 		catch (IOException e)
 		{
